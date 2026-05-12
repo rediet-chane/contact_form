@@ -9,7 +9,6 @@ class ContactApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Contact us',
-      theme: ThemeData(primarySwatch: Colors.blue, useMaterial3: true),
       home: ContactScreen(),
       debugShowCheckedModeBanner: false,
     );
@@ -198,6 +197,36 @@ class _ContactScreenState extends State<ContactScreen> {
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.blue,
                   foregroundColor: Colors.white,
+                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                ),
+              ),
+
+              ElevatedButton(
+                onPressed: () {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text('Message cancelled!'),
+                      backgroundColor: Colors.blue,
+                      duration: Duration(seconds: 2),
+                    ),
+                  );
+                  _nameController.clear();
+                  _emailController.clear();
+                  _messageController.clear();
+                  setState(() {
+                    _selectedService = null;
+                  });
+                },
+                child: const Text(
+                  'Cancel message',
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                ),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.white,
+                  foregroundColor: Colors.black,
                   padding: const EdgeInsets.symmetric(vertical: 16),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8),
