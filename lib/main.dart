@@ -39,9 +39,11 @@ class _ContactScreenState extends State<ContactScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Contact Us'),
+        title: const Text(
+          'Contact Us',
+          style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+        ),
         centerTitle: true, // Centers the title
-        backgroundColor: Colors.blue,
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(24.0),
@@ -53,7 +55,7 @@ class _ContactScreenState extends State<ContactScreen> {
               // Full Name Label and Field
               const Text(
                 'Full name',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 8),
               TextFormField(
@@ -77,10 +79,10 @@ class _ContactScreenState extends State<ContactScreen> {
               ),
               const SizedBox(height: 20),
 
-              // Email Label and Field
+              // Email
               const Text(
                 'Email',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 8),
               TextFormField(
@@ -111,7 +113,7 @@ class _ContactScreenState extends State<ContactScreen> {
               // Services Label and Dropdown
               const Text(
                 'Services',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 8),
               DropdownButtonFormField<String>(
@@ -146,7 +148,7 @@ class _ContactScreenState extends State<ContactScreen> {
               // Message Label and Field
               const Text(
                 'Message',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 8),
               TextFormField(
