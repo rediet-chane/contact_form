@@ -13,7 +13,6 @@ class ContactApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Contact us',
-      theme: ThemeData(primarySwatch: Colors.blue, useMaterial3: true),
       home: const ContactScreen(),
       debugShowCheckedModeBanner: false,
     );
@@ -45,11 +44,7 @@ class ContactScreenState extends State<ContactScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Contact Us'),
-        centerTitle: true,
-        backgroundColor: Colors.blue,
-      ),
+      appBar: AppBar(title: const Text('Contact Us'), centerTitle: true),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(24.0),
         child: Form(
