@@ -1,26 +1,33 @@
 import 'package:flutter/material.dart';
+import 'widgets/my_textfield.dart';
+import 'widgets/my_dropdown.dart';
 
 void main() {
-  runApp(ContactApp());
+  runApp(const ContactApp());
 }
 
 class ContactApp extends StatelessWidget {
+  const ContactApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Contact us',
-      home: ContactScreen(),
+      theme: ThemeData(primarySwatch: Colors.blue, useMaterial3: true),
+      home: const ContactScreen(),
       debugShowCheckedModeBanner: false,
     );
   }
 }
 
 class ContactScreen extends StatefulWidget {
+  const ContactScreen({super.key});
+
   @override
-  _ContactScreenState createState() => _ContactScreenState();
+  ContactScreenState createState() => ContactScreenState();
 }
 
-class _ContactScreenState extends State<ContactScreen> {
+class ContactScreenState extends State<ContactScreen> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
@@ -39,11 +46,9 @@ class _ContactScreenState extends State<ContactScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'Contact Us',
-          style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-        ),
-        centerTitle: true, // Centers the title
+        title: const Text('Contact Us'),
+        centerTitle: true,
+        backgroundColor: Colors.blue,
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(24.0),
@@ -52,188 +57,120 @@ class _ContactScreenState extends State<ContactScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              // Full Name Label and Field
-              const Text(
-                'Full name',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(height: 8),
-              TextFormField(
+              // Full Name Field
+              MyTextfield(
+                label: 'Full name',
+                hintText: 'Enter full name',
                 controller: _nameController,
-                decoration: InputDecoration(
-                  hintText: 'Enter full name',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  contentPadding: const EdgeInsets.symmetric(
-                    horizontal: 16,
-                    vertical: 14,
-                  ),
-                ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter your name';
-                  }
-                  return null;
-                },
               ),
               const SizedBox(height: 20),
 
-              // Email
-              const Text(
-                'Email',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
-              ),
-              const SizedBox(height: 8),
-              TextFormField(
+              // Email Field
+              MyTextfield(
+                label: 'Email',
+                hintText: 'Enter email address',
                 controller: _emailController,
-                decoration: InputDecoration(
-                  hintText: 'Enter email address',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  contentPadding: const EdgeInsets.symmetric(
-                    horizontal: 16,
-                    vertical: 14,
-                  ),
-                ),
                 keyboardType: TextInputType.emailAddress,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter your email';
-                  }
-                  if (!value.contains('@') || !value.contains('.')) {
-                    return 'Please enter a valid email address';
-                  }
-                  return null;
-                },
               ),
               const SizedBox(height: 20),
 
-              // Services Label and Dropdown
-              const Text(
-                'Services',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
-              ),
-              const SizedBox(height: 8),
-              DropdownButtonFormField<String>(
+              // Services Dropdown
+              MyDropdown(
+                label: 'Services',
                 value: _selectedService,
-                decoration: InputDecoration(
-                  hintText: 'Select a service',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  contentPadding: const EdgeInsets.symmetric(
-                    horizontal: 16,
-                    vertical: 12,
-                  ),
-                ),
-                items: _services.map((service) {
-                  return DropdownMenuItem(value: service, child: Text(service));
-                }).toList(),
+                items: _services,
                 onChanged: (value) {
                   setState(() {
                     _selectedService = value;
                   });
                 },
-                validator: (value) {
-                  if (value == null) {
-                    return 'Please select a service';
-                  }
-                  return null;
-                },
               ),
               const SizedBox(height: 20),
 
-              // Message Label and Field
-              const Text(
-                'Message',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
-              ),
-              const SizedBox(height: 8),
-              TextFormField(
+              // Message Field
+              MyTextfield(
+                label: 'Message',
+                hintText: 'Enter message',
                 controller: _messageController,
-                decoration: InputDecoration(
-                  hintText: 'Enter message',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  contentPadding: const EdgeInsets.symmetric(
-                    horizontal: 16,
-                    vertical: 14,
-                  ),
-                ),
                 maxLines: 4,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter your message';
-                  }
-                  return null;
-                },
               ),
               const SizedBox(height: 24),
 
-              // Send Message Button
-              ElevatedButton(
-                onPressed: () {
-                  if (_formKey.currentState!.validate()) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text('Message sent successfully!'),
+              // Buttons Row
+              Row(
+                children: [
+                  Expanded(
+                    child: ElevatedButton(
+                      onPressed: () {
+                        if (_formKey.currentState!.validate()) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text('Message sent successfully!'),
+                              backgroundColor: Colors.blue,
+                              duration: Duration(seconds: 2),
+                            ),
+                          );
+                          _nameController.clear();
+                          _emailController.clear();
+                          _messageController.clear();
+                          setState(() {
+                            _selectedService = null;
+                          });
+                        }
+                      },
+                      style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.blue,
-                        duration: Duration(seconds: 2),
+                        foregroundColor: Colors.white,
+                        padding: const EdgeInsets.symmetric(vertical: 16),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
                       ),
-                    );
-                    _nameController.clear();
-                    _emailController.clear();
-                    _messageController.clear();
-                    setState(() {
-                      _selectedService = null;
-                    });
-                  }
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.blue,
-                  foregroundColor: Colors.white,
-                  padding: const EdgeInsets.symmetric(vertical: 16),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                ),
-                child: Text(
-                  'Send message',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                ),
-              ),
-
-              ElevatedButton(
-                onPressed: () {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text('Message cancelled!'),
-                      backgroundColor: Colors.blue,
-                      duration: Duration(seconds: 2),
+                      child: const Text(
+                        'Send message',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                     ),
-                  );
-                  _nameController.clear();
-                  _emailController.clear();
-                  _messageController.clear();
-                  setState(() {
-                    _selectedService = null;
-                  });
-                },
-                child: const Text(
-                  'Cancel message',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                ),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.white,
-                  foregroundColor: Colors.black,
-                  padding: const EdgeInsets.symmetric(vertical: 16),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
                   ),
-                ),
+                  const SizedBox(width: 16),
+                  Expanded(
+                    child: OutlinedButton(
+                      onPressed: () {
+                        _nameController.clear();
+                        _emailController.clear();
+                        _messageController.clear();
+                        setState(() {
+                          _selectedService = null;
+                        });
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text('Form cleared'),
+                            backgroundColor: Colors.grey,
+                            duration: Duration(seconds: 2),
+                          ),
+                        );
+                      },
+                      style: OutlinedButton.styleFrom(
+                        foregroundColor: Colors.blue,
+                        side: const BorderSide(color: Colors.blue, width: 1),
+                        padding: const EdgeInsets.symmetric(vertical: 16),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                      ),
+                      child: const Text(
+                        'Cancel',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
