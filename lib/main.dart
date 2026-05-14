@@ -82,7 +82,7 @@ class _ContactScreenState extends State<ContactScreen> {
               // Email
               const Text(
                 'Email',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
               ),
               const SizedBox(height: 8),
               TextFormField(
@@ -113,7 +113,7 @@ class _ContactScreenState extends State<ContactScreen> {
               // Services Label and Dropdown
               const Text(
                 'Services',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
               ),
               const SizedBox(height: 8),
               DropdownButtonFormField<String>(
@@ -148,7 +148,7 @@ class _ContactScreenState extends State<ContactScreen> {
               // Message Label and Field
               const Text(
                 'Message',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
               ),
               const SizedBox(height: 8),
               TextFormField(
@@ -192,10 +192,6 @@ class _ContactScreenState extends State<ContactScreen> {
                     });
                   }
                 },
-                child: const Text(
-                  'Send message',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                ),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.blue,
                   foregroundColor: Colors.white,
@@ -203,6 +199,10 @@ class _ContactScreenState extends State<ContactScreen> {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8),
                   ),
+                ),
+                child: Text(
+                  'Send message',
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                 ),
               ),
 
